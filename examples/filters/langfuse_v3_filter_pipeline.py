@@ -214,14 +214,17 @@ class Pipeline:
                 }
                 
                 # Create trace with all necessary information
-                trace = self.langfuse.start_span(
+                trace = self.langfuse.trace(
                     name=f"chat:{chat_id}",
+                    user_id=user_email,
+                    session_id=chat_id,
                     input=body,
-                    metadata=trace_metadata
-                )
+                    metadata=trace_metadata,
+                    tags=tags_list if tags_list else None,
+)
 
                 # Set additional trace attributes
-                trace.update_trace(
+                trace.update(
                     user_id=user_email,
                     session_id=chat_id,
                     tags=tags_list if tags_list else None,
